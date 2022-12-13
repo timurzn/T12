@@ -1,0 +1,39 @@
+---
+- name: Install WebServers
+  hosts: webservers
+  
+  roles:
+    - install-nginx
+  
+  post_tasks:
+    - name: Check http server
+      ansible.builtin.uri:
+        url: http://127.0.0.1
+        method: GET
+      register: _result
+      until: _result.status == 200
+      retries: 5
+      delay: 5
+
+
+
+- name: Install Balancers
+  hosts: loadbalancers
+  roles:
+    - install-haproxy
+    - install-keepalived
+  
+  post_tasks:
+
+  - name: Check http Virtual IP
+    ansible.builtin.uri:
+      url: "http://{{ virt_ip }}"
+      method: GET
+    register: _result
+    until: _result.status == 200
+    retries: 5
+    delay: 5
+
+  
+
+

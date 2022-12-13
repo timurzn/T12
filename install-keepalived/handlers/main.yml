@@ -1,0 +1,15 @@
+---
+# handlers file for install-keepalived
+- name: Start-keepalived
+  become: true
+  ansible.builtin.systemd: 
+    name: keepalived.service
+    state: started
+    enabled: yes
+    daemon_reload: yes
+
+- name: Restart-keepalived
+  become: true
+  ansible.builtin.systemd: 
+    name: keepalived.service
+    state: restarted 

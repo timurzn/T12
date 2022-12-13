@@ -1,0 +1,41 @@
+---
+- name: Install HAProxy
+  become: true
+  ansible.builtin.apt:
+    update_cache: yes
+    name: haproxy
+    state: present
+  notify: Start-haproxy
+
+- name: Flush handlers
+  ansible.builtin.meta: flush_handlers 
+
+- name: Copy HAProxy config
+  become: true
+  ansible.builtin.template:
+    src: haproxy.cfg.j2
+    dest: /etc/haproxy/haproxy.cfg
+    mode: 0644
+    validate: haproxy -f %s -c -q
+  notify: restart-haproxy
+
+# - name: restart-haproxy
+#   become: true
+#   ansible.builtin.systemd: 
+#     name: haproxy
+#     state: restarted
+#     daemon_reload: yes
+
+
+# - name: Flush handlers
+#   ansible.builtin.meta: flush_handlers 
+
+# - name: waiting
+#   ansible.builtin.pause:
+#     seconds: 15
+
+
+# - name: Check http HAProxy
+#   ansible.builtin.uri:
+#     url: http://127.0.0.1
+

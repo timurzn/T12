@@ -1,0 +1,5 @@
+---
+  nginx_host_username: 'ubuntu'
+  web1: '10.1.126.5'
+  web2: '10.1.126.8'
+  virt_ip: '10.1.126.133'

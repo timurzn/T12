@@ -1,0 +1,21 @@
+---
+webservers:
+  hosts:
+    webserver1:
+      ansible_host: 10.1.126.5
+      ansible_connection: ssh
+      ansible_user: ubuntu
+    webserver2:
+      ansible_host: 10.1.126.8
+      ansible_connection: ssh
+      ansible_user: ubuntu
+loadbalancers:
+  hosts:
+    haproxy1:
+      ansible_host: 10.1.126.15
+      ansible_connection: ssh
+      ansible_user: ubuntu
+    haproxy2:
+      ansible_host: 10.1.126.9
+      ansible_connection: ssh
+      ansible_user: ubuntu

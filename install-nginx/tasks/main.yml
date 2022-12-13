@@ -1,0 +1,32 @@
+---
+- name: Install Nginx
+  become: true
+  ansible.builtin.apt:
+    update_cache: yes
+    name: nginx
+    state: present
+  notify: Start-nginx
+
+- name: Flush handlers
+  ansible.builtin.meta: flush_handlers  
+
+- name: Copy nginx config
+  become: true
+  ansible.builtin.template:
+    src: nginx.conf.j2
+    dest: /etc/nginx/nginx.conf
+  notify: Reload-nginx
+
+- name: Copy Web-page
+  become: true
+  ansible.builtin.template:
+    src: index.html.j2
+    dest: /usr/share/nginx/html/index.html
+  notify: Reload-nginx
+
+# - name: Flush handlers
+#   ansible.builtin.meta: flush_handlers  
+
+# - name: Check http server
+#   ansible.builtin.uri:
+#     url: http://127.0.0.1

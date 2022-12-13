@@ -1,0 +1,21 @@
+defaults
+   mode http
+   log global
+   balance roundrobin
+   timeout connect 5000
+   timeout client 5000
+   timeout server 5000
+
+frontend public_web_servers
+   bind *:80
+   stats uri /haproxy?stats
+   default_backend nginx_pool
+
+backend nginx_pool
+    balance roundrobin
+    server  web1 {{ web1 }}:80 check
+    server  web2 {{ web2 }}:80 check
+
+
+
+

@@ -1,0 +1,16 @@
+---
+- name: Start-haproxy
+  become: true
+  ansible.builtin.systemd: 
+    name: haproxy
+    state: started
+      
+
+- name: restart-haproxy
+  become: true
+  ansible.builtin.systemd: 
+    name: haproxy
+    state: restarted
+    daemon_reload: yes
+
+# handlers file for install-haproxy
